@@ -22,10 +22,14 @@ public class BHVSpiel {
 	@CsvBindByName (column = "Liga")
 	private String liga;
 	
+	@CsvBindByName (column = "Staffelkurzbezeichnung")
+	private String staffelkurzbezeichnung;
+	
+	
 	
 	public String getWPNummer() {
 		try {
-		return LigaEnum.valueOf(liga.replace(" ", "")).getWpNummer();
+		return LigaEnum.valueOf(liga.replace(" ", "")).getWpNummer(staffelkurzbezeichnung);
 		}
 		catch (Exception exp)
 		{

@@ -20,31 +20,39 @@ package de.faeustl.model;
 
 public  enum LigaEnum {
 	
-	 LigaSüd ("1"),
-	 LLF ("38"),
-	 BZKF ("297"),
+	 LigaSüd ("1", "3. Liga Süd"),
+	 LLF ("38", "Landesliga Staffel N"),
+	 BZKF ("297", "Landesliga Staffel N"),
 	 
 	 //männer
-	 BZOLM("68"),
-	 BZLM("292"),
+	 BZOLM("68","Landesliga Staffel N"),
+	 BZLM("292","Landesliga Staffel N"),
 	 
 	 //weibliche Jugend
 	 
-	 BYWB("133"),
-	 LLWC("296"),
+	 BYWB("133", "Landesliga Staffel N"),
+	 LLWC("296", "Landesliga Staffel N"),
 	 
 	 //männlische Jugen
-	 LLMA("295"),
-	 LLMB("236"),
-	 ÜBOLMC("126");
+	 LLMA("295", "Landesliga Staffel N"),
+	 LLMB("236", "Landesliga Staffel N"),
+	 ÜBOLMC("126", "Landesliga Staffel N");
 	
 	private final String wpNummer;
+	private final String liganame;
 	
-	LigaEnum(String ligaNummer){
+	LigaEnum(String ligaNummer, String pLigaName){
 		this.wpNummer = ligaNummer;
+		this.liganame = pLigaName;
 	}
 
-	public String getWpNummer() {
+	public String getLiganame() {
+		return liganame;
+	}
+
+	public String getWpNummer(String pLigaName) {
+		if (liganame.equals(pLigaName))
 		return wpNummer;
+		else return null;
 	}
 }

@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Iterator;
 
+import com.google.gson.JsonObject;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -28,7 +28,8 @@ public class BHVSpieleImport {
 		HttpURLConnection conn;
 		try {
 			conn = (HttpURLConnection) new URL(
-					"https://bhv-handball.liga.nu/cgi-bin/WebObjects/nuLigaDokumentHBDE.woa/wa/nuDokument?dokument=RegionMeetingsFOP&championship=OS+2018%2F19")
+					
+					"https://bhv-handball.liga.nu/cgi-bin/WebObjects/nuLigaDokumentHBDE.woa/wa/nuDokument?dokument=RegionMeetingsFOP&championship=BHV+2018%2F19")
 							.openConnection();
 
 		StringBuilder result = new StringBuilder();
@@ -44,12 +45,29 @@ public class BHVSpieleImport {
                 .build();
 
         Iterator<BHVSpiel> csvUserIterator = csvToBean.iterator();
-
+        HashMap<String, String> mannschaften = new HashMap<>();
+        
         while (csvUserIterator.hasNext()) {
         	BHVSpiel spiel = csvUserIterator.next();
         		if (spiel.getWPNummer() != null) {
-        		System.out.println(Search.searchTeam(spiel.getHeimmannschaft().replace(" ", "-").replace("I", "").replace("/", "").trim()));
-        		System.out.println(spiel.getWPNummer());
+        			String slug = spiel.getHeimmannschaft().replace(" ", "-").replace("I", "").replace("/", "").trim();
+        			if (!mannschaften.containsKey(slug)){
+        				 JsonObject jsonTeam = Search.searchTeam(slug);
+        				 try{
+        				 mannschaften.put(jsonTeam.get("slug").getAsString(), jsonTeam.get("id").getAsString());
+        				 }
+        				 catch (Exception exp)
+        				 {
+        					 System.out.println("Nicht gefunden: " + slug);
+        				 }
+        			}
+        			
+        			
+        			
+//        		System.out.println(Search.searchTeam(slug));
+        		
+
+        		
         		}
 //            System.out.println("Datum : " + spiel.getDatum());
 //            System.out.println("Zeit : " + spiel.getZeit());
@@ -59,7 +77,10 @@ public class BHVSpieleImport {
 //            System.out.println("Liga : " + spiel.getWPNummer());
 //            System.out.println("==========================");
         }
-   
+		for (String name: mannschaften.keySet())
+		{
+			System.out.println(name + mannschaften.get(name).toString());
+		}
         rd.close();
 		
 		
