@@ -1,5 +1,9 @@
 package de.faeustl.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import com.opencsv.bean.CsvBindByName;
 
 public class BHVSpiel {
@@ -19,14 +23,47 @@ public class BHVSpiel {
 	@CsvBindByName (column = "Heimmannschaft")
 	private String heimmannschaft;
 	
+	public String wpHeimmannschaftID;
+	
+	@CsvBindByName (column = "Gastmannschaft")
+	private String gastmannschaft;
+	
+	public String wpGastmannschaftID;
+	
 	@CsvBindByName (column = "Liga")
 	private String liga;
 	
 	@CsvBindByName (column = "Staffelkurzbezeichnung")
 	private String staffelkurzbezeichnung;
 	
+	public String season = "\"seasons\": [286]";
 	
 	
+	
+	public String getGastmannschaft() {
+		return gastmannschaft;
+	}
+
+	public void setGastmannschaft(String gastmannschaft) {
+		this.gastmannschaft = gastmannschaft;
+	}
+
+	public String getLiga() {
+		return liga;
+	}
+
+	public void setLiga(String liga) {
+		this.liga = liga;
+	}
+
+	public String getStaffelkurzbezeichnung() {
+		return staffelkurzbezeichnung;
+	}
+
+	public void setStaffelkurzbezeichnung(String staffelkurzbezeichnung) {
+		this.staffelkurzbezeichnung = staffelkurzbezeichnung;
+	}
+
 	public String getWPNummer() {
 		try {
 		return LigaEnum.valueOf(liga.replace(" ", "")).getWpNummer(staffelkurzbezeichnung);
@@ -35,6 +72,32 @@ public class BHVSpiel {
 		{
 			return null;
 		}
+	}
+	
+	public String getSpielStart()
+	{
+		DateTimeFormatter formmat1 = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+		
+		
+		LocalDate ldt = LocalDate.parse(datum, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+		String format = formmat1.format(ldt);
+		return format + "T" + zeit +":00";
+		
+	}
+	
+	public String getJSON() {
+		
+		String json = "{ \"leagues\": ["+ getWPNummer().trim() + " ], ";
+		json += "\"title\": \"" + getHeimmannschaft() + " vs. " + getGastmannschaft() + "\", ";
+		json += "\"date\": \"" +getSpielStart() + "\", ";
+		json += "\"teams\": [ " + wpHeimmannschaftID + " , " + wpGastmannschaftID + "], ";
+		json += season;
+		json += ",\"slug\": \"18-19-" + spielnummer + "\"";
+		json += ",\"status\": \"future\"}";
+		
+		return json;
+		
+		
 	}
 	
 	public String getDatum() {
