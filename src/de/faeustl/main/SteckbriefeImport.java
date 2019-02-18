@@ -9,8 +9,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.ICSVParser;
 
 import de.faeustl.model.Steckbrief;
 import de.faeustl.wp.Search;
@@ -18,23 +21,35 @@ import de.faeustl.wp.Writer;
 
 public class SteckbriefeImport {
 
-	private static final String SAMPLE_CSV_FILE_PATH = "./steckbriefe.csv";
+	private static final String SAMPLE_CSV_FILE_PATH = "./Steckbrief2.csv";
 
     public static void main(String[] args) throws IOException {
         try (
             Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
-            CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+        		
+        		 
+        		
+        		
+        		CSVReader csvReader = new CSVReaderBuilder(reader)
+            		.withCSVParser(new CSVParserBuilder().withSeparator(';').build())
+            		.withSkipLines(1)
+            		
+            		.build();
         ) {
+        	
             // Reading Records One by One in a String array
-        	List<String[]> records = csvReader.readAll();
+        	List<String[]> records = csvReader
+        			
+        			.readAll();
         	
         	List<Steckbrief> lSteckbrief = new ArrayList<>();
         	
         	for (String[] record : records) {
         		
         		Steckbrief steckbrief = new Steckbrief(record[2], record[3], record[4], record[5], record[6], record[7], 
-        				record[8], record[9], record[10], record[11], record[12], record[13], record[14]);
+        				record[8], record[9], record[10], record[11], record[12], record[13]);
         		lSteckbrief.add(steckbrief);
+        		System.out.println (steckbrief.vorname + " " + steckbrief.nachname);
 
         	}
         	

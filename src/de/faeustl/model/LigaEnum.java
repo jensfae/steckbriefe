@@ -20,23 +20,23 @@ package de.faeustl.model;
 
 public  enum LigaEnum {
 	
-	 LigaSüd ("1", "3. Liga Süd"),
-	 LLF ("38", "Landesliga Staffel N"),
-	 BZKF ("297", "Landesliga Staffel N"),
+//	 LigaSüd ("56", "3. Liga Süd"),
+	 LLF ("38", "Landesliga Staffel N");
+//	 BZKF ("297", "Landesliga Staffel N");
 	 
 	 //männer
-	 BZOLM("68","Landesliga Staffel N"),
-	 BZLM("292","Landesliga Staffel N"),
+//	 BZOLM("68","Bezirksoberliga");
+//	 BZLM("292","Landesliga Staffel N"),
 	 
 	 //weibliche Jugend
 	 
-	 BYWB("133", "Landesliga Staffel N"),
-	 LLWC("296", "Landesliga Staffel N"),
+//	 BYWB("133", "Bayernliga");
+//	 LLWC("296", "Landesliga Nord");
 	 
 	 //männlische Jugen
-	 LLMA("295", "Landesliga Staffel N"),
-	 LLMB("236", "Landesliga Staffel N"),
-	 ÜBOLMC("126", "Landesliga Staffel N");
+//	 LLMA("295", "Landesliga Süd");
+//	 LLMB("236", "Landesliga Nord");
+//	 ÜBOLMC("126", "ÜBOL Ost");
 	
 	private final String wpNummer;
 	private final String liganame;

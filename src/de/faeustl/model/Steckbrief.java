@@ -30,14 +30,16 @@ public class Steckbrief {
 		
 	}
 
-	public Steckbrief(String pNachname, String pVorname, String pPosition, String pAlter, String pGroesse,
-			String pNationalität, String pErfolge, String pBeim_ESV, String pBisherige_Vereine, String pBeruf,
-			String pHobbys, String pPersoenliche_Ziele, String pLebensmott) {
+	public Steckbrief
+	
+	(String pVorname,String pNachname,String pBeim_ESV,String pPosition,String pGroesse,String pNationalität,String pErfolge,String pBisherige_Vereine, String pBeruf,String pHobbys,String pPersoenliche_Ziele, String pLebensmott)
+	
+	{
 		
 		this.nachname = pNachname;
 		this.vorname = pVorname;
 		this.position = pPosition;
-		this.alter = pAlter;
+		
 		this.groeße = pGroesse;
 		this.nationalitaet = pNationalität;
 		this.erfolge = pErfolge;
@@ -60,7 +62,7 @@ public class Steckbrief {
 		steckbrief = "{\"fields\":{";
 		steckbrief += "\"beim_esv_seit\":\"" + beim_esv.replaceAll("\n", ", ") + "\",";
 		steckbrief += "\"position\":\"" + position.replaceAll("\n", ", ") + "\",";
-		steckbrief += "\"alter\":\"" + alter.replaceAll("\n", ", ") + "\",";
+//		steckbrief += "\"alter\":\"" + alter.replaceAll("\n", ", ") + "\",";
 		steckbrief += "\"groeße_in_cm\":\"" + groeße.replaceAll("\n", ", ") + "\",";
 		steckbrief += "\"nationalitaet\":\"" + nationalitaet.replaceAll("\n", ", ") + "\",";
 		steckbrief += "\"erfolge\":\"" + erfolge.replaceAll("\n", ", ") + "\",";

@@ -35,11 +35,78 @@ public class BHVSpiel {
 	
 	@CsvBindByName (column = "Staffelkurzbezeichnung")
 	private String staffelkurzbezeichnung;
+
+	@CsvBindByName (column = "Ergebnis")
+	public String ergebnis;
+	
+	@SuppressWarnings("deprecation")
+	public Integer getErgebnisHeim() {
+		
+		String split = ergebnis.substring(2).split(":")[0];
+		
+		return new Integer(split);
+	}
+	@SuppressWarnings("deprecation")
+	public Integer getErgebnisGast() {
+		
+		String split = ergebnis.split(":")[1];
+		
+		return new Integer(split);
+	}
+	
+	
+	public String getHeimWinLoss()
+	{
+		if (getErgebnisHeim()>getErgebnisGast())
+		{
+			return "win";
+		}
+		else if (getErgebnisHeim()<getErgebnisGast()) {
+			return "loss";
+		}
+		else return "draw";
+	}
+	public String getGastWinLoss()
+	{
+		if (getErgebnisHeim()>getErgebnisGast())
+		{
+			return "loss";
+		}
+		else if (getErgebnisHeim()<getErgebnisGast()) {
+			return "win";
+		}
+		else return "draw";
+	}
+	
+	
+	public void setErgebnis(String ergebnis) {
+		this.ergebnis = ergebnis;
+	}
+
+	public String getHalbzeitergebnis() {
+		return halbzeitergebnis;
+	}
+
+	public void setHalbzeitergebnis(String halbzeitergebnis) {
+		this.halbzeitergebnis = halbzeitergebnis;
+	}
+
+	@CsvBindByName (column = "Halbzeitergebnis")
+	public String halbzeitergebnis;
+	
 	
 	public String season = "\"seasons\": [286]";
 	
+	private String wpHallennummer;
 	
-	
+	public String getWpHallennummer() {
+		return wpHallennummer;
+	}
+
+	public void setWpHallennummer(String wpHallennummer) {
+		this.wpHallennummer = wpHallennummer;
+	}
+
 	public String getGastmannschaft() {
 		return gastmannschaft;
 	}
@@ -66,6 +133,8 @@ public class BHVSpiel {
 
 	public String getWPNummer() {
 		try {
+//			System.out.println(staffelkurzbezeichnung);
+			
 		return LigaEnum.valueOf(liga.replace(" ", "")).getWpNummer(staffelkurzbezeichnung);
 		}
 		catch (Exception exp)
@@ -93,7 +162,52 @@ public class BHVSpiel {
 		json += "\"teams\": [ " + wpHeimmannschaftID + " , " + wpGastmannschaftID + "], ";
 		json += season;
 		json += ",\"slug\": \"18-19-" + spielnummer + "\"";
+		json += ",\"venues\": [" + wpHallennummer + "]";
+		
+		
+		if (getErgebnisHeim()>0) {
+		json += ",\"results\": {\"0\": {\n" + 
+				"            \"firsthalf\": \"1st Half\",\n" + 
+				"            \"secondhalf\": \"2nd Half\",\n" + 
+				"            \"goals\": \"Goals\",\n" + 
+				"            \"outcome\": \"Spielausgang\"\n" + 
+				"        },\"" + wpHeimmannschaftID + "\": { \"goals\": \"" +getErgebnisHeim() + "\",\n" + 
+						"            \"outcome\": [\n" + 
+						"                \""+getHeimWinLoss()+"\"\n" + 
+						"            ] "
+						
+				
+				
+				+ "}, \"" +wpGastmannschaftID +"\": {\"goals\": \"" +  getErgebnisGast() + "\",\n" + 
+						"            \"outcome\": [\n" + 
+						"                \""+getGastWinLoss()+ "\"\n" + 
+						"            ]}}";
+				
+		}
+//				"results": {
+//            "0": {
+//                "firsthalf": "1st Half",
+//                "secondhalf": "2nd Half",
+//                "goals": "Goals",
+//                "outcome": "Spielausgang"
+//            },
+//            "1576": {
+//                "goals": "24",
+//                "outcome": [
+//                    "loss"
+//                ]
+//            },
+//            "43276": {
+//                "goals": "25",
+//                "outcome": [
+//                    "win"
+//                ]
+//            }
+	
 		json += ",\"status\": \"future\"}";
+		
+		
+		
 		
 		return json;
 		
