@@ -7,6 +7,7 @@ import java.util.Base64;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import de.faeustl.model.Tabelle;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -41,6 +42,45 @@ public class Writer {
 				.addHeader("Cache-Control", "no-cache")
 				.addHeader("Authorization", "Basic "+basicAuth)
 				.post(RequestBody.create(MediaType.parse(pSteckbrief), pSteckbrief))				
+				.build();
+		
+	
+			try {
+				client.newCall(request).execute();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+
+
+	}
+	public static void updateRankingTable(String updateTableJson, String wpTableID)
+	{
+		String userCredentials = "jensfae:cwa0503mu";
+		String basicAuth = Base64.getEncoder().encodeToString((userCredentials).getBytes(StandardCharsets.UTF_8));
+		OkHttpClient client = new OkHttpClient();
+		String updateString = "{" + updateTableJson + "}"; 
+//		URL url = new URL("http://handball.esv1927.de/wp-json/wp/v2/sp_player/");
+		   HttpUrl url = new HttpUrl.Builder()
+			       .scheme("http")
+			       .host("handball.esv1927.de")
+			       .addPathSegment("wp-json")
+			       .addPathSegment("sportspress")
+			       .addPathSegment("v2")
+			       .addPathSegment("tables")
+			       .addPathSegment(wpTableID)
+			       .build();
+			  
+		
+		Request request = new Request.Builder()
+				.url(url)
+				.addHeader("Content-Type", "application/json")
+				.addHeader("Cache-Control", "no-cache")
+				.addHeader("Authorization", "Basic "+basicAuth)
+				.post(RequestBody.create(MediaType.parse(updateString),updateString))		
+//				.post(RequestBody.create(MediaType.parse(insertString), insertString))		
 				.build();
 		
 	
@@ -178,12 +218,12 @@ public class Writer {
 			       .scheme("http")
 			       .host("handball.esv1927.de")
 			       .addPathSegment("wp-json")
-//			       .addPathSegment("sportspress")
-//			       .addPathSegment("v2")
-//			       .addPathSegment("events")
-			       .addPathSegment("wp")
+			       .addPathSegment("sportspress")
 			       .addPathSegment("v2")
-			       .addPathSegment("sp_event")
+			       .addPathSegment("events")
+//			       .addPathSegment("wp")
+//			       .addPathSegment("v2")
+//			       .addPathSegment("sp_event")
 
 			       .addPathSegment(pSpielnummer)
 			       .build();
@@ -206,7 +246,7 @@ public class Writer {
 				
 				obj =(JsonObject)jsonParsor.parse(json);     
 				
-				System.out.println(json);
+				
 
 				return obj;
 			} catch (IOException e) {

@@ -31,8 +31,8 @@ public class BHVSpieleImport {
 		try {
 			conn = (HttpURLConnection) new URL(
 
-					"https://bhv-handball.liga.nu/cgi-bin/WebObjects/nuLigaDokumentHBDE.woa/wa/nuDokument?dokument=RegionMeetingsFOP&championship=BHV+2018%2F19")
-//					 "https://bhv-handball.liga.nu/cgi-bin/WebObjects/nuLigaDokumentHBDE.woa/wa/nuDokument?dokument=RegionMeetingsFOP&championship=OS+2018%2F19")
+//					"https://bhv-handball.liga.nu/cgi-bin/WebObjects/nuLigaDokumentHBDE.woa/wa/nuDokument?dokument=RegionMeetingsFOP&championship=BHV+2018%2F19")
+					 "https://bhv-handball.liga.nu/cgi-bin/WebObjects/nuLigaDokumentHBDE.woa/wa/nuDokument?dokument=RegionMeetingsFOP&championship=OS+2018%2F19")
 					 .openConnection();
 
 			conn.setRequestMethod("GET");

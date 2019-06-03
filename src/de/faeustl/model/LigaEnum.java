@@ -21,11 +21,11 @@ package de.faeustl.model;
 public  enum LigaEnum {
 	
 //	 LigaSüd ("56", "3. Liga Süd"),
-	 LLF ("38", "Landesliga Staffel N");
+//	 LLF ("38", "Landesliga Staffel N");
 //	 BZKF ("297", "Landesliga Staffel N");
 	 
 	 //männer
-//	 BZOLM("68","Bezirksoberliga");
+	 BZOLM("68","Bezirksoberliga");
 //	 BZLM("292","Landesliga Staffel N"),
 	 
 	 //weibliche Jugend
